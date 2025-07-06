@@ -62,6 +62,12 @@ echo "$VERSIONS_JSON" | jq -c 'reverse | .[]' | while read -r version_info; do
   ESCAPED_DESCRIPTION=$(echo "$DESCRIPTION" | tr '\n' ' ' | sed 's/"/\\"/g')
 
   echo "Processing Version: $VERSION_NUMBER"
+
+  # Check if this version has already been committed
+  if [ -n "$(git log --oneline --grep="^Version $VERSION_NUMBER:")" ]; then
+    echo "  - Version $VERSION_NUMBER already committed. Skipping."
+    continue
+  fi
   
   # Clean up GAS files
   find . -maxdepth 1 -type f \( -name "*.js" -o -name "*.html" -o -name "*.gs" -o -name "appsscript.json" \) -delete
