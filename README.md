@@ -2,6 +2,8 @@
 
 This GitHub Action imports the version history of a Google Apps Script project into a Git repository. It creates a new commit for each version, preserving the creation date and description.
 
+This action uses [clasp](https://github.com/google/clasp), the command-line tool for Google Apps Script.
+
 ## Usage
 
 To use this action in your workflow, add the following step:
@@ -17,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Import GAS Versions
-        uses: asannou/gas-version-importer-action@master
+        uses: asannou/gas-version-importer-action@v1
         with:
           script_id: 'YOUR_SCRIPT_ID' # Replace with your Google Apps Script ID
           author_name: 'Your Name' # Optional: Defaults to the user who triggered the workflow
