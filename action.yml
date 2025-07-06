@@ -1,0 +1,65 @@
+name: 'Import Google Apps Script Versions to Git'
+description: 'Imports Google Apps Script versions to a Git repository.'
+
+inputs:
+  script_id:
+    description: 'Google Apps Script ID'
+    required: true
+  author_name:
+    description: 'Commit author name (optional)'
+    required: false
+    default: ''
+  author_email:
+    description: 'Commit author email (optional)'
+    required: false
+    default: ''
+  github_token:
+    description: 'GitHub token'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 'lts/*'
+
+    - name: Install clasp and jq
+      run: |
+        npm install -g @google/clasp
+        sudo apt-get update
+        sudo apt-get install -y jq
+      shell: bash
+
+    - name: Configure clasp credentials
+      run: |
+        mkdir -p ~/.clasp
+        cat <<EOF > ~/.clasprc.json
+        {
+          "tokens": {
+            "default": {
+              "client_id": "${{ inputs.CLASP_CLIENT_ID }}",
+              "client_secret": "${{ inputs.CLASP_CLIENT_SECRET }}",
+              "type": "authorized_user",
+              "refresh_token": "${{ inputs.CLASP_REFRESH_TOKEN }}",
+              "access_token": "dummy",
+              "token_type": "Bearer",
+              "expiry_date": 1,
+              "id_token": "dummy"
+            }
+          }
+        }
+        EOF
+      shell: bash
+      env:
+        CLASP_REFRESH_TOKEN: ${{ inputs.CLASP_REFRESH_TOKEN }}
+        CLASP_CLIENT_ID: ${{ inputs.CLASP_CLIENT_ID }}
+        CLASP_CLIENT_SECRET: ${{ inputs.CLASP_CLIENT_SECRET }}
+
+    - name: Generate and push GAS versions
+      run: |
+        bash ${{ github.action_path }}/import_gas_versions.sh "${{ inputs.script_id }}" "${{ inputs.author_name }}" "${{ inputs.author_email }}"
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
