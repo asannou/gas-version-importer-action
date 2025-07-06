@@ -1,5 +1,8 @@
 name: 'Import Google Apps Script Versions to Git'
 description: 'Imports Google Apps Script versions to a Git repository.'
+branding:
+  icon: 'git-commit'
+  color: 'blue'
 
 inputs:
   script_id:
