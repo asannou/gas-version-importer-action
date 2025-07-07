@@ -26,10 +26,6 @@ jobs:
           script_id: 'YOUR_SCRIPT_ID' # Replace with your Google Apps Script ID
           author_name: 'Your Name' # Optional
           author_email: 'your.email@example.com' # Optional
-        env:
-          CLASP_REFRESH_TOKEN: ${{ secrets.CLASP_REFRESH_TOKEN }}
-          CLASP_CLIENT_ID: ${{ secrets.CLASP_CLIENT_ID }}
-          CLASP_CLIENT_SECRET: ${{ secrets.CLASP_CLIENT_SECRET }}
 ```
 
 ### Permissions
