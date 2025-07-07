@@ -22,8 +22,6 @@ runs:
   steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -35,7 +33,6 @@ runs:
         npm install -g @google/clasp
         sudo apt-get update
         sudo apt-get install -y jq
-      shell: bash
 
     - name: Configure clasp credentials
       run: |
@@ -44,10 +41,10 @@ runs:
         {
           "tokens": {
             "default": {
-              "client_id": "${{ env.CLASP_CLIENT_ID }}",
-              "client_secret": "${{ env.CLASP_CLIENT_SECRET }}",
+              "client_id": "${{ secrets.CLASP_CLIENT_ID }}",
+              "client_secret": "${{ secrets.CLASP_CLIENT_SECRET }}",
               "type": "authorized_user",
-              "refresh_token": "${{ env.CLASP_REFRESH_TOKEN }}",
+              "refresh_token": "${{ secrets.CLASP_REFRESH_TOKEN }}",
               "access_token": "dummy",
               "token_type": "Bearer",
               "expiry_date": 1,
@@ -56,20 +53,11 @@ runs:
           }
         }
         EOF
-      shell: bash
-      env:
-        CLASP_REFRESH_TOKEN: ${{ secrets.CLASP_REFRESH_TOKEN }}
-        CLASP_CLIENT_ID: ${{ secrets.CLASP_CLIENT_ID }}
-        CLASP_CLIENT_SECRET: ${{ secrets.CLASP_CLIENT_SECRET }}
 
     - name: Generate GAS versions
       run: |
         bash ${{ github.action_path }}/import_gas_versions.sh "${{ inputs.script_id }}" "${{ inputs.author_name }}" "${{ inputs.author_email }}"
-      shell: bash
 
     - name: Push changes
       run: |
         git push
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
