@@ -47,10 +47,10 @@ runs:
         {
           "tokens": {
             "default": {
-              "client_id": "${{ inputs.CLASP_CLIENT_ID }}",
-              "client_secret": "${{ inputs.CLASP_CLIENT_SECRET }}",
+              "client_id": "${{ env.CLASP_CLIENT_ID }}",
+              "client_secret": "${{ env.CLASP_CLIENT_SECRET }}",
               "type": "authorized_user",
-              "refresh_token": "${{ inputs.CLASP_REFRESH_TOKEN }}",
+              "refresh_token": "${{ env.CLASP_REFRESH_TOKEN }}",
               "access_token": "dummy",
               "token_type": "Bearer",
               "expiry_date": 1,
@@ -61,9 +61,9 @@ runs:
         EOF
       shell: bash
       env:
-        CLASP_REFRESH_TOKEN: ${{ inputs.CLASP_REFRESH_TOKEN }}
-        CLASP_CLIENT_ID: ${{ inputs.CLASP_CLIENT_ID }}
-        CLASP_CLIENT_SECRET: ${{ inputs.CLASP_CLIENT_SECRET }}
+        CLASP_REFRESH_TOKEN: ${{ secrets.CLASP_REFRESH_TOKEN }}
+        CLASP_CLIENT_ID: ${{ secrets.CLASP_CLIENT_ID }}
+        CLASP_CLIENT_SECRET: ${{ secrets.CLASP_CLIENT_SECRET }}
 
     - name: Generate GAS versions
       run: |
