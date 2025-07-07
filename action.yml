@@ -16,6 +16,15 @@ inputs:
     description: 'Commit author email (optional)'
     required: false
     default: ''
+  CLASP_REFRESH_TOKEN:
+    description: 'The refresh token for clasp.'
+    required: true
+  CLASP_CLIENT_ID:
+    description: 'The client ID for clasp.'
+    required: true
+  CLASP_CLIENT_SECRET:
+    description: 'The client secret for clasp.'
+    required: true
 
 runs:
   using: "composite"
@@ -33,6 +42,7 @@ runs:
         npm install -g @google/clasp
         sudo apt-get update
         sudo apt-get install -y jq
+      shell: bash
 
     - name: Configure clasp credentials
       run: |
@@ -41,10 +51,10 @@ runs:
         {
           "tokens": {
             "default": {
-              "client_id": "${{ secrets.CLASP_CLIENT_ID }}",
-              "client_secret": "${{ secrets.CLASP_CLIENT_SECRET }}",
+              "client_id": "${{ inputs.CLASP_CLIENT_ID }}",
+              "client_secret": "${{ inputs.CLASP_CLIENT_SECRET }}",
               "type": "authorized_user",
-              "refresh_token": "${{ secrets.CLASP_REFRESH_TOKEN }}",
+              "refresh_token": "${{ inputs.CLASP_REFRESH_TOKEN }}",
               "access_token": "dummy",
               "token_type": "Bearer",
               "expiry_date": 1,
@@ -53,11 +63,14 @@ runs:
           }
         }
         EOF
+      shell: bash
 
     - name: Generate GAS versions
       run: |
         bash ${{ github.action_path }}/import_gas_versions.sh "${{ inputs.script_id }}" "${{ inputs.author_name }}" "${{ inputs.author_email }}"
+      shell: bash
 
     - name: Push changes
       run: |
         git push
+      shell: bash

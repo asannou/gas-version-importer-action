@@ -26,6 +26,9 @@ jobs:
           script_id: 'YOUR_SCRIPT_ID' # Replace with your Google Apps Script ID
           author_name: 'Your Name' # Optional
           author_email: 'your.email@example.com' # Optional
+          CLASP_REFRESH_TOKEN: ${{ secrets.CLASP_REFRESH_TOKEN }}
+          CLASP_CLIENT_ID: ${{ secrets.CLASP_CLIENT_ID }}
+          CLASP_CLIENT_SECRET: ${{ secrets.CLASP_CLIENT_SECRET }}
 ```
 
 ### Permissions
@@ -34,11 +37,14 @@ This action requires the `contents: write` permission to push the generated comm
 
 ### Inputs
 
-| Name           | Description                                | Required |
-| -------------- | ------------------------------------------ | -------- |
-| `script_id`    | The ID of the Google Apps Script project.  | `true`   |
-| `author_name`  | The name of the commit author (optional).  | `false`  |
-| `author_email` | The email of the commit author (optional). | `false`  |
+| Name                  | Description                                | Required |
+| --------------------- | ------------------------------------------ | -------- |
+| `script_id`           | The ID of the Google Apps Script project.  | `true`   |
+| `author_name`         | The name of the commit author (optional).  | `false`  |
+| `author_email`        | The email of the commit author (optional). | `false`  |
+| `CLASP_REFRESH_TOKEN` | The refresh token for `clasp`.             | `true`   |
+| `CLASP_CLIENT_ID`     | The client ID for `clasp`.                 | `true`   |
+| `CLASP_CLIENT_SECRET` | The client secret for `clasp`.             | `true`   |
 
 ### Secrets
 
