@@ -65,9 +65,14 @@ runs:
         CLASP_CLIENT_ID: ${{ inputs.CLASP_CLIENT_ID }}
         CLASP_CLIENT_SECRET: ${{ inputs.CLASP_CLIENT_SECRET }}
 
-    - name: Generate and push GAS versions
+    - name: Generate GAS versions
       run: |
         bash ${{ github.action_path }}/import_gas_versions.sh "${{ inputs.script_id }}" "${{ inputs.author_name }}" "${{ inputs.author_email }}"
+      shell: bash
+
+    - name: Push changes
+      run: |
+        git push
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}

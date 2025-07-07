@@ -87,4 +87,3 @@ echo "$VERSIONS_JSON" | jq -c 'reverse | .[]' | while read -r version_info; do
   GIT_COMMITTER_DATE="$CREATE_TIME" git commit --allow-empty -m "Version $VERSION_NUMBER: $ESCAPED_DESCRIPTION" --date="$CREATE_TIME" $AUTHOR_OPTION
 done
 
-git push origin HEAD
