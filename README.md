@@ -17,30 +17,32 @@ on:
 jobs:
   import:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Import GAS Versions
         uses: asannou/gas-version-importer-action@v1
         with:
           script_id: 'YOUR_SCRIPT_ID' # Replace with your Google Apps Script ID
-          author_name: 'Your Name' # Optional: Defaults to the user who triggered the workflow
-          author_email: 'your.email@example.com' # Optional: Defaults to the user who triggered the workflow
-          
+          author_name: 'Your Name' # Optional
+          author_email: 'your.email@example.com' # Optional
+        env:
           CLASP_REFRESH_TOKEN: ${{ secrets.CLASP_REFRESH_TOKEN }}
           CLASP_CLIENT_ID: ${{ secrets.CLASP_CLIENT_ID }}
           CLASP_CLIENT_SECRET: ${{ secrets.CLASP_CLIENT_SECRET }}
 ```
 
+### Permissions
+
+This action requires the `contents: write` permission to push the generated commits to the repository.
+
 ### Inputs
 
-| Name                  | Description                                       | Required |
-| --------------------- | ------------------------------------------------- | -------- |
-| `script_id`           | The ID of the Google Apps Script project.         | `true`   |
-| `author_name`         | The name of the commit author (optional).         | `false`  |
-| `author_email`        | The email of the commit author (optional).        | `false`  |
-| `github_token`        | The GitHub token to use for pushing to the repository. | `true`   |
-| `CLASP_REFRESH_TOKEN` | The refresh token for `clasp`.                    | `true`   |
-| `CLASP_CLIENT_ID`     | The client ID for `clasp`.                        | `true`   |
-| `CLASP_CLIENT_SECRET` | The client secret for `clasp`.                    | `true`   |
+| Name           | Description                                | Required |
+| -------------- | ------------------------------------------ | -------- |
+| `script_id`    | The ID of the Google Apps Script project.  | `true`   |
+| `author_name`  | The name of the commit author (optional).  | `false`  |
+| `author_email` | The email of the commit author (optional). | `false`  |
 
 ### Secrets
 
