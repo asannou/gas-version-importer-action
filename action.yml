@@ -16,9 +16,6 @@ inputs:
     description: 'Commit author email (optional)'
     required: false
     default: ''
-  github_token:
-    description: 'GitHub token'
-    required: true
 
 runs:
   using: "composite"
@@ -26,7 +23,7 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        token: ${{ inputs.github_token }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -75,4 +72,4 @@ runs:
         git push
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ inputs.github_token }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

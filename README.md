@@ -24,7 +24,7 @@ jobs:
           script_id: 'YOUR_SCRIPT_ID' # Replace with your Google Apps Script ID
           author_name: 'Your Name' # Optional: Defaults to the user who triggered the workflow
           author_email: 'your.email@example.com' # Optional: Defaults to the user who triggered the workflow
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
           CLASP_REFRESH_TOKEN: ${{ secrets.CLASP_REFRESH_TOKEN }}
           CLASP_CLIENT_ID: ${{ secrets.CLASP_CLIENT_ID }}
           CLASP_CLIENT_SECRET: ${{ secrets.CLASP_CLIENT_SECRET }}
