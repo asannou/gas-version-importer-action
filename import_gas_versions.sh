@@ -79,11 +79,12 @@ echo "$VERSIONS_JSON" | jq -c 'reverse | .[]' | while read -r version_info; do
 
   git add -A
   
-  AUTHOR_OPTION=()
+  COMMIT_ARGS=(--allow-empty -m "Version $VERSION_NUMBER: $ESCAPED_DESCRIPTION" --date="$CREATE_TIME")
+
   if [ -n "$AUTHOR_NAME" ] && [ -n "$AUTHOR_EMAIL" ]; then
-    AUTHOR_OPTION=(--author="$AUTHOR_NAME <$AUTHOR_EMAIL>")
+    COMMIT_ARGS+=(--author="$AUTHOR_NAME <$AUTHOR_EMAIL>")
   fi
 
-  GIT_COMMITTER_DATE="$CREATE_TIME" git commit --allow-empty -m "Version $VERSION_NUMBER: $ESCAPED_DESCRIPTION" --date="$CREATE_TIME" "${AUTHOR_OPTION[@]}"
+  GIT_COMMITTER_DATE="$CREATE_TIME" git commit "${COMMIT_ARGS[@]}"
 done
 
