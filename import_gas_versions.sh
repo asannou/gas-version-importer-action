@@ -12,6 +12,7 @@ git config user.email "github-actions[bot]@users.noreply.github.com"
 
 echo '{"scriptId":"'"$SCRIPT_ID"'"}' > .clasp.json
 echo ".clasp.json" >> .gitignore
+sort -u -o .gitignore .gitignore
 git add .gitignore
 
 if git ls-files --error-unmatch ".clasp.json" > /dev/null 2>&1; then
